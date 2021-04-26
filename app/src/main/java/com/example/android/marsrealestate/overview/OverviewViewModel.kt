@@ -42,10 +42,10 @@ class OverviewViewModel : ViewModel() {
     val status: LiveData<String>
         get() = _status
 
-    private val _property = MutableLiveData<MarsProperty>()
+    private val _properties = MutableLiveData<List<MarsProperty>>()
 
-    val property: LiveData<MarsProperty>
-        get() = _property
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
 
     private var viewModelJob = Job()
     private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
@@ -58,7 +58,9 @@ class OverviewViewModel : ViewModel() {
     }
 
     /**
-     * Sets the value of the status LiveData to the Mars API status.
+     * Gets Mars real estate property information from the Mars API Retrofit service and updates the
+     * [MarsProperty] [List] [LiveData]. The Retrofit service returns a coroutine Deferred, which we
+     * await to get the result of the transaction.
      */
     private fun getMarsRealEstateProperties() {
 
@@ -69,7 +71,7 @@ class OverviewViewModel : ViewModel() {
                 var listResult = getPropertiesDeferred.await()
 
                 if (listResult.size > 0){
-                    _property.value = listResult[0]
+                    _properties.value = listResult
                 }
                 //_response.value = "Success: ${listResult.size} Mars properties retrieved"
             } catch (e: Exception) {

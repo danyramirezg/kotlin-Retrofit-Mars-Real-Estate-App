@@ -113,4 +113,8 @@ dependencies {
 
     // Glide library dependency:
     implementation "com.github.bumptech.glide:glide:$version_glide"
+
+    //Add the Gradle dependency for the RecyclerView:
+
+    implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
 }
