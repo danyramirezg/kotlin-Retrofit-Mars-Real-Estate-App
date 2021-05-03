@@ -17,8 +17,12 @@
 
 package com.example.android.marsrealestate.network
 
+import android.os.Parcelable
 import com.squareup.moshi.Json
+import kotlinx.android.parcel.Parcelize
 
+// Make MarsProperty parcelable so it can be passed as an argument in navigation:
+@Parcelize
 data class MarsProperty(
 
         val price: Double,
@@ -29,4 +33,10 @@ data class MarsProperty(
 // Rename the img_src class property to imgSrcUrl, and add a @Json annotation
 // to remap the img_src JSON field to it:
         @Json(name = "img_src") val imgSrcUrl: String
-)
+
+
+) : Parcelable {
+
+    val isRental
+        get() = type == "rent"
+}
